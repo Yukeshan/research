@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const ItemSchema = new Schema({
     id: Number,
-    name: String,
+    TranslatedRecipeName: String,
     menuId: Number
 }, { timestamps: true });
 

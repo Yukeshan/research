@@ -11,7 +11,7 @@ const getSeachedItems = async (req, res) => {
     try {
       let items;
       if (q) {
-        items = await Item.find({ name: { $regex: q, $options: 'i' } });
+        items = await Item.find({ TranslatedRecipeName: { $regex: q, $options: 'i' } });
       }
       res.json(items);
     } catch (error) {

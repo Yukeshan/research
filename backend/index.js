@@ -1,3 +1,5 @@
+//mongodb+srv://mdalmamunit427:0eqHrVZeHcSFeCmr@veggify-recipe-app.da0qxhz.mongodb.net/veggify-recipe?retryWrites=true&w=majority&appName=veggify-recipe-app
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -8,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
-const mongoURI = "mongodb+srv://mdalmamunit427:0eqHrVZeHcSFeCmr@veggify-recipe-app.da0qxhz.mongodb.net/veggify-recipe?retryWrites=true&w=majority&appName=veggify-recipe-app";
+const mongoURI = "mongodb+srv://yjyukesh:Goggins23@cluster0.vusij.mongodb.net/Cook-It";
 
 mongoose.connect(mongoURI).then(()=> console.log("Mongodb connected successfully!"));
 
