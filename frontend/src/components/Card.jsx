@@ -51,13 +51,11 @@ const Card = ({ item }) => {
                   alt=""
                   className="recipe-icon small"
                 />
-                <div className="ml-1">30 minutes</div>
+                <div className="ml-1">{item?.TotalTimeInMins} Minutes</div>
               </div>
             </div>
           </div>
-          <div className="absolute top-2 right-2 py-2 px-4 bg-white rounded-lg">
-            <span className="text-md">{item?.more?.difficulty}</span>
-          </div>
+
         </div>
       </div>
     </div>
