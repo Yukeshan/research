@@ -16,6 +16,7 @@ import ErrorPage from './components/ErrorPage.jsx';
 import ResourcePage from './pages/resources/ResourcePage.jsx';
 import ContactPage from './pages/contact/ContactPage.jsx';
 import AboutPage from './pages/about/AboutPage.jsx';
+import RecipeRecommendation from './components/RecipeRecommendation.jsx';
 
 
 const router = createBrowserRouter([
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <AboutPage/>
+      },
+      {
+        path: "/RecipeRecommendation",
+        element: <RecipeRecommendation/>
       }
     ],
   },
