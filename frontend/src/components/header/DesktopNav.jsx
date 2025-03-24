@@ -20,12 +20,12 @@ const DesktopNav = ({ menuItems, logo }) => {
       <ul className="flex items-center gap-4 font-medium">
         <li>
           <button className="text-secondary px-4 py-2 rounded">
-            Log In
+            <a href="/login">Login</a>
           </button>
         </li>
         <li>
-          <button className="bg-primary text-secondary px-4 py-2 rounded">
-            Sign Up
+          <button className="bg-primary text-secondary px-4 py-2 rounded" >
+          <a href="/register">Register</a>
           </button>
         </li>
       </ul>

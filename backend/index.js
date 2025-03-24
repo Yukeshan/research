@@ -1,30 +1,29 @@
-//mongodb+srv://mdalmamunit427:0eqHrVZeHcSFeCmr@veggify-recipe-app.da0qxhz.mongodb.net/veggify-recipe?retryWrites=true&w=majority&appName=veggify-recipe-app
-
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const userRoutes = require("./src/routes/userRoute");
 const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); // Ensure express.json() is used before routes
+app.use('/api', userRoutes);
 
 // Connect to MongoDB
 const mongoURI = "mongodb+srv://yjyukesh:Goggins23@cluster0.vusij.mongodb.net/Cook-It";
 
-mongoose.connect(mongoURI).then(()=> console.log("Mongodb connected successfully!"));
+mongoose.connect(mongoURI).then(() => console.log("Mongodb connected successfully!"));
 
-// routes
+// Additional routes
 const ItemRoutes = require("./src/routes/itemRoute");
-const categoryRoutes = require("./src/routes/categoryRoute")
+const categoryRoutes = require("./src/routes/categoryRoute");
 
-app.use('/api', ItemRoutes)
-app.use('/api', categoryRoutes)
+app.use('/api', ItemRoutes);
+app.use('/api', categoryRoutes);
 
 app.get('/', (req, res) => {
-    res.send('Veggify Recipe App Server is running!')
-  })
-
+  res.send('Veggify Recipe App Server is running!');
+});
 
 // Start the server
 const PORT = process.env.PORT || 5000;
