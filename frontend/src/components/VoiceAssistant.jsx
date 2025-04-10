@@ -1,9 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const VoiceAssistant = () => {
   const [listening, setListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [response, setResponse] = useState('');
+  const [speechSynthesisUtterance, setSpeechSynthesisUtterance] = useState(null);
+
+  useEffect(() => {
+    if (response && window.speechSynthesis && speechSynthesisUtterance) {
+      speechSynthesisUtterance.text = response;
+      window.speechSynthesis.speak(speechSynthesisUtterance);
+    }
+  }, [response, speechSynthesisUtterance]);
+
+  useEffect(() => {
+    if (window.speechSynthesis) {
+      const utterance = new SpeechSynthesisUtterance();
+      utterance.lang = 'en-US'; // You can adjust the language
+      utterance.rate = 1;   // Adjust the speech rate (0.1 to 10)
+      utterance.pitch = 1;  // Adjust the speech pitch (0 to 2)
+      setSpeechSynthesisUtterance(utterance);
+    } else {
+      console.error("Speech synthesis is not supported in this browser.");
+    }
+  }, []);
 
   const startListening = () => {
     const recognition = new window.webkitSpeechRecognition();
