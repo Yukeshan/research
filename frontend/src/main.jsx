@@ -20,6 +20,7 @@ import RecipeRecommendation from './components/RecipeRecommendation.jsx';
 import Login from './pages/login/Login.jsx';
 import Register from './pages/register/register.jsx';
 import ImageUpload from './components/ImageClassification.jsx';
+import VoiceAssistant from './components/VoiceAssistant.jsx';
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: "/imageClassification",
         element: <ImageUpload/>
+      },
+      {
+        path: "/voiceAssistant",
+        element: <VoiceAssistant/>
       }
     ],
   },

@@ -14,13 +14,13 @@ CORS(app, resources={r"/predict": {"origins": "http://localhost:5173"}})  # Allo
 
 # Set up basic logging
 logging.basicConfig(level=logging.DEBUG)
-
+#
 # Load the trained model
-MODEL_PATH = "fruit_vegetable_classifier.h5"  # Update with your model path
+MODEL_PATH = "fruit_vegetable_classifier.h5"
 model = load_model(MODEL_PATH)
 
 # Define the same class labels used during training
-CLASS_LABELS = ["healthy apple", "rotten banana", "healthy orange", "rotten orange"]  # Update with your actual class names
+CLASS_LABELS = ["healthy apple", "rotten banana", "healthy orange", "rotten orange"] 
 
 # Function to preprocess the uploaded image
 def preprocess_image(img_path, img_size=(150, 150)):

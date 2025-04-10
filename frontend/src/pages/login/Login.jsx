@@ -26,7 +26,7 @@ export default function Login() {
       localStorage.setItem('token', result.token);
   
       // Optionally, redirect user to a protected page or dashboard
-      // window.location.href = "/dashboard";
+      // window.location.href = "/Home";
     } catch (error) {
       setErrorMessage(error.message);
     }
