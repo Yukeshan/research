@@ -1,8 +1,8 @@
 import React from "react";
-import ClockImg from "../assets/clock.svg"
+import ClockImg from "../assets/clock.svg";
 import { Link } from "react-router-dom";
 
-const Card = ({ item }) => {
+const Card = ({ item, showIngredientCount = false }) => {
   const categoryStyles = {
     Entrees: { backgroundColor: "#f0f5c4", color: "#59871f" },
     Breakfast: { backgroundColor: "#efedfa", color: "#3c3a8f" },
@@ -10,7 +10,6 @@ const Card = ({ item }) => {
     Desserts: { backgroundColor: "#e8f5fa", color: "#397a9e" },
     Sides: { backgroundColor: "#feefc9", color: "#d16400" },
     Drinks: { backgroundColor: "#ffeae3", color: "#f0493e" },
-    // Add more categories and their styles here
     default: { backgroundColor: "#fff", color: "#000" },
   };
 
@@ -18,44 +17,50 @@ const Card = ({ item }) => {
     return categoryStyles[category] || categoryStyles.default;
   };
 
-  const categoryStyle = getCategoryStyle(item?.category);
+  const categoryStyle = getCategoryStyle(item?.category || item?.Cuisine);
+
+  const getIngredientCount = () => {
+    if (!item?.TranslatedIngredients) return "0 Ingredients";
+    const count = item.TranslatedIngredients.split(",").filter(Boolean).length;
+    return `${count} Ingredient${count > 1 ? "s" : ""}`;
+  };
 
   return (
-    <div className="container flex justify-center md:justify-start">
-      <div className="max-w-sm">
-        <div className="bg-white relative shadow-lg hover:shadow-xl transition duration-500 rounded-lg">
-          <img className="rounded-t-lg" src={item?.image_url} alt="" />
-          <div className="py-6 px-5 rounded-lg bg-white">
-            <Link to={`/items/${item._id}`}>
-            <h1 className="text-gray-700 font-bold text-2xl mb-8 hover:text-gray-900 hover:cursor-pointer">
+    <div className="w-full">
+      <div className="bg-white shadow-lg hover:shadow-xl transition duration-500 rounded-lg flex flex-col h-[450px]">
+        <img
+          className="h-48 w-full object-cover rounded-t-lg"
+          src={item?.image_url}
+          alt={item?.TranslatedRecipeName}
+        />
+        <div className="py-4 px-5 flex flex-col justify-between flex-grow">
+          <Link to={item._id ? `/items/${item._id}` : `/flask-recipe`} state={item._id ? null : { recipe: item }}>
+            <h1 className="text-gray-700 font-bold text-xl mb-4 hover:text-gray-900 hover:cursor-pointer line-clamp-2">
               {item?.TranslatedRecipeName}
             </h1>
-            </Link>
-            
+          </Link>
 
-            {/* category & reading time */}
-            <div className="flex justify-between items-center flex-wrap">
+          <div className="flex justify-between items-center mt-auto">
+            {showIngredientCount ? (
+              <button className="py-2 px-4 font-medium rounded-lg shadow-md text-sm bg-gray-100 text-gray-700">
+                {getIngredientCount()}
+              </button>
+            ) : (
               <button
-                className="mt-6 py-2 px-4 font-medium rounded-lg shadow-md hover:shadow-lg transition duration-300"
+                className="py-2 px-4 font-medium rounded-lg shadow-md text-sm"
                 style={{
                   backgroundColor: categoryStyle.backgroundColor,
                   color: categoryStyle.color,
                 }}
               >
-                {item?.category}
+                {item?.category || item?.Cuisine}
               </button>
-              <div className="flex items-center py-2 mt-6">
-                <img
-                  src={ClockImg}
-                  loading="lazy"
-                  alt=""
-                  className="recipe-icon small"
-                />
-                <div className="ml-1">{item?.TotalTimeInMins} Minutes</div>
-              </div>
+            )}
+            <div className="flex items-center text-sm text-gray-600">
+              <img src={ClockImg} loading="lazy" alt="" className="h-4 w-4 mr-1" />
+              {item?.TotalTimeInMins} Minutes
             </div>
           </div>
-
         </div>
       </div>
     </div>

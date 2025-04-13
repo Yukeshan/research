@@ -21,6 +21,7 @@ import Login from './pages/login/Login.jsx';
 import Register from './pages/register/register.jsx';
 import ImageUpload from './components/ImageClassification.jsx';
 import VoiceAssistant from './components/VoiceAssistant.jsx';
+import FlaskRecipeDescription from './components/FlaskRecipeDescription.jsx';
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: "/RecipeRecommendation",
         element: <RecipeRecommendation/>
+      },
+      {
+        path: "/flask-recipe",
+        element: <FlaskRecipeDescription />
       },
       {
         path: "/login",

@@ -36,7 +36,7 @@ def recommend():
     try:
         data = request.json
         ingredients = data.get("ingredients", "")
-        n_results = data.get("n_results", 5)
+        n_results = int(data.get("n_results", 5))
         
         if not ingredients:
             return jsonify({"error": "No ingredients provided"}), 400
