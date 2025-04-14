@@ -1,13 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/"); // If user is already logged in, redirect to home
+    }
+  }, [navigate]);
 
   const onSubmit = async (data) => {
-    setErrorMessage(""); // Clear previous errors
-  
+    setErrorMessage("");
+    
     try {
       const response = await fetch("http://127.0.0.1:5000/api/login", {
         method: "POST",
@@ -22,16 +31,27 @@ export default function Login() {
       const result = await response.json();
       console.log("Login successful:", result);
   
-      // Store the JWT token in localStorage
-      localStorage.setItem('token', result.token);
+      // Ensure the response contains userName
+      if (result.userName) {
+        // Store the token and userName in localStorage
+        localStorage.setItem("token", result.token);
+        localStorage.setItem("userName", result.userName); // Store userName
+        console.log("Stored userName in localStorage:", result.userName);
+      } else {
+        console.error("userName not found in the response");
+      }
   
-      // Optionally, redirect user to a protected page or dashboard
-      // window.location.href = "/Home";
+      window.dispatchEvent(new Event("authChanged")); // 👈 This notifies Header
+      navigate("/"); // Redirect to home page
     } catch (error) {
       setErrorMessage(error.message);
     }
   };
   
+  
+  
+  
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
@@ -73,7 +93,10 @@ export default function Login() {
         </form>
 
         <p className="text-center text-sm text-gray-600 mt-3">
-          Don't have an account? <a href="/register" className="text-blue-500 hover:underline">Sign up</a>
+          Don't have an account?{" "}
+          <a href="/register" className="text-blue-500 hover:underline">
+            Sign up
+          </a>
         </p>
       </div>
     </div>

@@ -1,6 +1,6 @@
 const User = require('../model/userModel');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken'); // Import jsonwebtoken
+const jwt = require('jsonwebtoken');
 
 // User Registration
 const userRegister = async (req, res) => {
@@ -20,17 +20,16 @@ const userRegister = async (req, res) => {
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
 
-    // Create a JWT token
     const token = jwt.sign(
-      { userId: newUser._id, email: newUser.email },
-      process.env.JWT_SECRET, // Use a secret key from environment variables
-      { expiresIn: '1h' } // Set token expiration to 1 hour (optional)
+      { userId: newUser._id, email: newUser.email, userName: newUser.name },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
     );
 
-    // Respond with the token
     res.status(201).json({
       message: "User registered successfully",
-      token: token, // Send the token back to the client
+      token: token,
+      userName: newUser.name
     });
   } catch (error) {
     res.status(500).json({ message: "Error registering user" });
@@ -47,7 +46,7 @@ const userLogin = async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    if (!user) {
+    if (!user || !user.isActive) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
@@ -56,24 +55,54 @@ const userLogin = async (req, res) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    // Create a JWT token
     const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      process.env.JWT_SECRET, // Use a secret key from environment variables
-      { expiresIn: '1h' } // Set token expiration to 1 hour
+      { userId: user._id, email: user.email, userName: user.name },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
     );
 
-    // Respond with the token
     res.status(200).json({
       message: "Login successful",
-      token: token, // Send the token back to the client
+      token: token,
+      userName: user.name
     });
   } catch (error) {
     res.status(500).json({ message: "Error logging in" });
   }
 };
 
+// Update user profile
+const updateUser = async (req, res) => {
+  const userId = req.user.userId;
+  const { name, email } = req.body;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { name, email },
+      { new: true }
+    );
+    res.json({ message: "User updated successfully", user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to update user" });
+  }
+};
+
+// Deactivate (soft delete) user account
+const deactivateUser = async (req, res) => {
+  const userId = req.user.userId;
+
+  try {
+    await User.findByIdAndUpdate(userId, { isActive: false });
+    res.json({ message: "User account deactivated" });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to deactivate account" });
+  }
+};
+
 module.exports = {
   userRegister,
-  userLogin
+  userLogin,
+  updateUser,
+  deactivateUser
 };

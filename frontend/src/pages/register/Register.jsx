@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate("/"); // Already logged in, redirect to home
+    }
+  }, [navigate]);
+
   const onSubmit = async (data) => {
-    setErrorMessage(""); // Clear previous errors
+    setErrorMessage("");
   
     try {
       const response = await fetch("http://127.0.0.1:5000/api/register", {
@@ -22,11 +31,11 @@ export default function Register() {
       const result = await response.json();
       console.log("Registration successful:", result);
   
-      // Store the JWT token in localStorage
-      localStorage.setItem('token', result.token);
+      localStorage.setItem("token", result.token);
+      localStorage.setItem("name", data.name);
+      window.dispatchEvent(new Event("authChanged")); // 👈 This notifies Header
   
-      // Optionally, redirect user or show success message
-      // window.location.href = "/dashboard"; // Example redirect
+      navigate("/");
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -69,7 +78,10 @@ export default function Register() {
             <label className="block text-sm font-medium text-gray-700">Password</label>
             <input
               type="password"
-              {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" } })}
+              {...register("password", {
+                required: "Password is required",
+                minLength: { value: 6, message: "Password must be at least 6 characters" },
+              })}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
@@ -85,7 +97,9 @@ export default function Register() {
               })}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
-            {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>}
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>
+            )}
           </div>
 
           <button
@@ -97,7 +111,10 @@ export default function Register() {
         </form>
 
         <p className="text-center text-sm text-gray-600 mt-3">
-          Already have an account? <a href="/login" className="text-blue-500 hover:underline">Login</a>
+          Already have an account?{" "}
+          <a href="/login" className="text-blue-500 hover:underline">
+            Login
+          </a>
         </p>
       </div>
     </div>

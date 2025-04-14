@@ -12,8 +12,7 @@ const Footer = () => {
         </div>
 
         <p className="mt-4 max-w-xs text-gray-500">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse non cupiditate quae nam
-          molestias.
+          Cook It is a game changing intelligent cooking recipe application which enhace the cooking experience of beginners and make cooking more enjoyable.
         </p>
 
         <ul className="mt-8 flex gap-6">
@@ -55,32 +54,6 @@ const Footer = () => {
               <FaTwitter className="h-6 w-6" />
             </a>
           </li>
-
-          <li>
-            <a
-              href="#"
-              rel="noreferrer"
-              target="_blank"
-              className="text-btnColor transition hover:opacity-75"
-            >
-              <span className="sr-only">GitHub</span>
-
-              <FaGithub className="h-6 w-6" />
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              rel="noreferrer"
-              target="_blank"
-              className="text-btnColor transition hover:opacity-75"
-            >
-              <span className="sr-only">Dribbble</span>
-
-              <FaDribbble className="h-6 w-6" />
-            </a>
-          </li>
         </ul>
       </div>
 
@@ -92,6 +65,7 @@ const Footer = () => {
             <li>
               <a href="#" className="text-gray-700 transition hover:opacity-75"> Recipes </a>
             </li>
+            
 
             <li>
               <a href="#" className="text-gray-700 transition hover:opacity-75"> About </a>
@@ -101,27 +75,24 @@ const Footer = () => {
               <a href="#" className="text-gray-700 transition hover:opacity-75"> Contact </a>
             </li>
 
-            <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75"> HR Consulting </a>
-            </li>
 
           </ul>
         </div>
 
         <div>
-          <p className="font-medium text-gray-900">Company</p>
+          <p className="font-medium text-gray-900">Features</p>
 
           <ul className="mt-6 space-y-4 text-sm">
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75"> Style Guide </a>
+              <a href="#" className="text-gray-700 transition hover:opacity-75"> Freshness Detection</a>
             </li>
 
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75"> Meet the Team </a>
+              <a href="#" className="text-gray-700 transition hover:opacity-75"> Voice Assistant </a>
             </li>
 
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75"> Accounts Review </a>
+              <a href="#" className="text-gray-700 transition hover:opacity-75"> Reverse Recipe Search </a>
             </li>
           </ul>
         </div>
@@ -138,9 +109,6 @@ const Footer = () => {
               <a href="#" className="text-gray-700 transition hover:opacity-75"> FAQs </a>
             </li>
 
-            <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75"> Live Chat </a>
-            </li>
           </ul>
         </div>
 
@@ -153,15 +121,15 @@ const Footer = () => {
             </li>
 
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75"> Returns Policy </a>
+              <a href="#" className="text-gray-700 transition hover:opacity-75"> Terms and Conditions </a>
             </li>
 
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75"> Refund Policy </a>
+              <a href="#" className="text-gray-700 transition hover:opacity-75"> User Policy </a>
             </li>
 
             <li>
-              <a href="#" className="text-gray-700 transition hover:opacity-75"> Hiring Statistics </a>
+              <a href="#" className="text-gray-700 transition hover:opacity-75"> Privacy Policy </a>
             </li>
           </ul>
         </div>
@@ -169,7 +137,7 @@ const Footer = () => {
     </div>
 
     <hr />
-    <p className="text-xs text-gray-500 text-center">&copy; 2025. Company Name. All rights reserved.</p>
+    <p className="text-xs text-gray-500 text-center">&copy; 2025. Yukeshan Yoganathan. All rights reserved.</p>
   </div>
 </footer>
   )

@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -10,7 +13,7 @@ app.use(express.json()); // Ensure express.json() is used before routes
 app.use('/api', userRoutes);
 
 // Connect to MongoDB
-const mongoURI = "mongodb+srv://yjyukesh:Goggins23@cluster0.vusij.mongodb.net/Cook-It";
+const mongoURI = process.env.mongoURI;
 
 mongoose.connect(mongoURI).then(() => console.log("Mongodb connected successfully!"));
 
