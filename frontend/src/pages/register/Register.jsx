@@ -32,8 +32,8 @@ export default function Register() {
       console.log("Registration successful:", result);
   
       localStorage.setItem("token", result.token);
-      localStorage.setItem("name", data.name);
-      window.dispatchEvent(new Event("authChanged")); // 👈 This notifies Header
+      localStorage.setItem("userName", result.userName);
+      window.dispatchEvent(new Event("authChanged"));
   
       navigate("/");
     } catch (error) {

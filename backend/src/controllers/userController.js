@@ -71,38 +71,9 @@ const userLogin = async (req, res) => {
   }
 };
 
-// Update user profile
-const updateUser = async (req, res) => {
-  const userId = req.user.userId;
-  const { name, email } = req.body;
 
-  try {
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { name, email },
-      { new: true }
-    );
-    res.json({ message: "User updated successfully", user: updatedUser });
-  } catch (error) {
-    res.status(500).json({ message: "Failed to update user" });
-  }
-};
-
-// Deactivate (soft delete) user account
-const deactivateUser = async (req, res) => {
-  const userId = req.user.userId;
-
-  try {
-    await User.findByIdAndUpdate(userId, { isActive: false });
-    res.json({ message: "User account deactivated" });
-  } catch (error) {
-    res.status(500).json({ message: "Failed to deactivate account" });
-  }
-};
 
 module.exports = {
   userRegister,
-  userLogin,
-  updateUser,
-  deactivateUser
+  userLogin
 };
